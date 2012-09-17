@@ -5,6 +5,7 @@
 		<thead>
 			<tr>
 				<td>Name</td>
+                <td>Category</td>
 				<td>Delete</td>
 			</tr>
 		</thead>
@@ -13,7 +14,8 @@
 					foreach( $answers as $key => $answer ) { ?>
 				<tr>
 					<td><input type="text" name="likertmatrix_name[<?php echo $i; ?>]" value="<?php echo esc_attr(wp_kses_stripslashes($answer["text"])); ?>" /></td>
-					<td><input type="checkbox" name="likertmatrix_delete[<?php echo  $i; ?>]" value="yes" /></td>
+                    <td><input type="text" name="multiple_category[<?php echo $i; ?>]" value="<?php echo esc_attr(wp_kses_stripslashes($answer["category"])); ?>" /></td>
+                    <td><input type="checkbox" name="likertmatrix_delete[<?php echo  $i; ?>]" value="yes" /></td>
 				</tr>
 			<?php	
 					$i++; 

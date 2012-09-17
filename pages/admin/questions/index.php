@@ -68,8 +68,10 @@ var saveOrder = function() {
 			<tr>
 				<th>ID</th>
 				<th>Question</th>
+                <th>Categories</th>
 				<th>Type</th>
 				<th>Rate</th>
+                <th>Points</th>
 				<th>Edit</th>
 				<th>Delete</th>
 				<th></th>
@@ -79,9 +81,11 @@ var saveOrder = function() {
 			<tr>
 				<th>ID</th>
 				<th>Question</th>
+                <th>Categories</th>
 				<th>Type</th>
 				<th>Rate</th>
-				<th>Edit</th>
+                <th>Points</th>
+                <th>Edit</th>
 				<th>Delete</th>
 				<th></th>
 			</tr>
@@ -101,6 +105,24 @@ var saveOrder = function() {
 			<tr class="<?php echo ( $count % 2 ) ?  'wpsqt-odd' : 'wpsqt-even'; ?>" id="<?php echo $question['id']; ?>">
 				<td><?php echo $question['id']; ?></td>
 				<td><?php echo stripslashes($question['name']); ?></td>
+                <td>
+                    <?php
+                    $answers = $question['answers'];
+                    $categories = "N/A";
+                    if ( !isset($answers)  ){
+                        if ($question['category'] != ""){
+                            $categories = $question['category'];
+                        }
+                    } else {
+                        $categories = "";
+                        foreach( $answers as $row => $answer ){
+                            $categories .= stripslashes($answer['category'])." ";
+                        }
+                    }
+                    ?>
+                    <span><?php echo $categories; ?></span>
+
+                </td>
 				<td><?php echo ucfirst( stripslashes($question['type']) ); ?></td>
                 
 				<td>
@@ -131,7 +153,7 @@ var saveOrder = function() {
                     echo ($success_rate<80 ? "<span style=\"color:red;\">$success_rate%</span>" : "<span style=\"color:green;\">$success_rate%</span>");
                     ?>
                 </td>
-                
+                <td><?php echo stripslashes($question['points']); ?></td>
 				<td><a href="<?php echo WPSQT_URL_MAIN; ?>&section=questionedit&subsection=<?php esc_html_e($_GET['subsection']); ?>&id=<?php esc_html_e($_GET['id']); ?>&questionid=<?php esc_html_e($question['id']); ?>" class="button-secondary" title="Edit Question">Edit</a></td>
 				<td><a href="<?php echo WPSQT_URL_MAIN; ?>&section=questiondelete&subsection=<?php esc_html_e($_GET['subsection']); ?>&id=<?php esc_html_e($_GET['id']); ?>&questionid=<?php esc_html_e($question['id']); ?>" class="button-secondary" title="Delete Question">Delete</a></td>
 				<td><img src="<?php echo plugin_dir_url(WPSQT_DIR.'images/handle.png').'handle.png'; ?>" /></td>
